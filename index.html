@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine for Avni 💜</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-grabe sadnt(circle at top, #c084fc 0, #4c1d95 45%, #1e1035 100%);
+      color: #f9f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 900px;
+    }
+
+    .card {
+      background: rgba(30, 16, 53, 0.9);
+      border-radius: 18px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(216, 180, 254, 0.4);
+    }
+
+    h1, h2, h3 {
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      letter-spacing: 0.06em;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .letter-wrapper {
+      margin-top: 1.5rem;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .letter-wrapper:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .letter-img {
+      width: 220px;
+      height: auto;
+      border-radius: 16px;
+      border: 2px solid #f5d0fe;
+      background: #2e1065;
+      object-fit: cover;
+    }
+
+    .btn-row {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-yes {
+      background: linear-grabe sadnt(135deg, #a855f7, #f97316);
+      color: white;
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.6);
+    }
+
+    .btn-no {
+      background: rgba(15, 23, 42, 0.9);
+      color: #e9d5ff;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .yay-text {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fbbf24;
+      text-shadow: 0 0 18px rgba(251, 191, 36, 0.9);
+      margin-top: 1rem;
+    }
+
+    /* Warning / continue section */
+    .warning-text {
+      margin-top: 1rem;
+      font-size: 0.98rem;
+      color: #fef3c7;
+    }
+
+    .subtle {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    /* Gojo vs Sukuna section */
+    .battle-wrapper {
+      margin-top: 1.8rem;
+    }
+
+    .battle-images {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6rem; /* will be adjusted by JS */
+      transition: gap 0.25s ease;
+    }
+
+    .battle-img {
+      width: 220px;
+      max-width: 40vw;
+      border-radius: 16px;
+      border: 2px solid #e5e7eb;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+      object-fit: cover;
+      background: #020617;
+    }
+
+    .dead-wrapper {
+      margin-top: 1.5rem;
+    }
+
+    .dead-img {
+      width: 260px;
+      max-width: 60vw;
+      border-radius: 18px;
+      border: 2px solid #fecaca;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+      object-fit: cover;
+      background: #020617;
+    }
+
+    .dead-text {
+      margin-top: 1rem;
+      font-size: 1.4rem;
+      color: #fee2e2;
+      text-shadow: 0 0 16px rgba(248, 113, 113, 0.9);
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 1.8rem 1.4rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .battle-images {
+        gap: 3rem;
+      }
+    }
+  
+/* Floating emoji background */
+#emoji-bg{
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.emoji-float{
+  position: absolute;
+  left: 0;
+  top: 110vh;
+  will-change: transform, opacity;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes floatUp{
+  0%{ transform: translate(var(--x,0px), 0px) rotate(0deg); opacity: 0; }
+  10%{ opacity: 0.9; }
+  100%{ transform: translate(var(--x,0px), -130vh) rotate(var(--r,360deg)); opacity: 0; }
+}
+/* Keep main content above the emoji layer */
+.container, .card{ position: relative; z-index: 2; }
+
+
+/* YAY page spam */
+.yay-spam{
+  position: fixed;
+  z-index: 20;
+  font-weight: 900;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+  color: #a020f0; /* purple */
+  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+@keyframes yayPop{
+  0%{ transform: scale(0.7); opacity: 0; }
+  15%{ opacity: 1; }
+  100%{ transform: scale(1); opacity: 0.95; }
+}
+
+/* Error popup */
+#device-error{
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.55);
+  z-index: 9999;
+}
+#device-error .box{
+  max-width: 520px;
+  width: calc(100% - 32px);
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  background: #1b0a2b;
+  border: 2px solid rgba(255,255,255,0.15);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  color: #fff;
+  text-align: center;
+}
+#device-error .title{
+  font-size: 18px;
+  font-weight: 900;
+  margin: 0 0 10px;
+}
+#device-error .msg{
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+}
+#device-error .btn{
+  margin-top: 14px;
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  cursor: pointer;
+  font-weight: 800;
+}
+#device-error .btn:hover{ background: rgba(255,255,255,0.16); }
+
+</style>
+</head>
+<body>
+  <div id="emoji-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="card">
+
+      <!-- STEP 1: Letter -->
+      <div id="step-letter">
+        <h1>Letter for Avni 💌</h1>
+        <p>Tap the letter to open it…</p>
+        <div class="letter-wrapper" id="openLetter">
+          <!-- Replace src with your envelope image path -->
+          <img src="Images.png/envelope.png" alt="Letter for Avni" class="letter-img" />
+        </div>
+      </div>
+
+      <!-- STEP 2: Main question -->
+      <div id="step-question" class="hidden">
+        <h2>Aviiii, will you be my Valentine? 💜</h2>
+        <div class="btn-row">
+          <button class="btn-yes" id="btnYes">Yes</button>
+          <button class="btn-no" id="btnNo">No</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Yes result -->
+      <div id="step-yes" class="hidden">
+        <h2 class="yay-text">YAYYYYYY!!! 🎉💜</h2>
+        <p>You chose the correct answer. </p>
+      </div>
+
+      <!-- STEP 4: First No warning -->
+      <div id="step-warning" class="hidden">
+        <h3>Warning ⚠️</h3>
+        <p class="warning-text">
+          Each time you click <strong>No</strong>, Sukuna will get closer to Gojo and will eventually make sad him.<br />
+          To save Gojo, you have to click <strong>Yes</strong>.
+        </p>
+        <p class="subtle">(You really want to risk Gojo’s life for one more “No”?)</p>
+        <div class="btn-row">
+          <button class="btn-yes" id="btnContinue">Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Gojo vs Sukuna progression -->
+      <div id="step-battle" class="hidden">
+        <h2>Think carefully, Avni…</h2>
+        <p>Every time you press <strong>No</strong>, Sukuna moves closer to Gojo.</p>
+
+        <div class="battle-wrapper">
+          <div class="battle-images" id="battleImages">
+            <!-- Replace src with your Gojo and Sukuna image paths -->
+            <img src="Images.png/Gojo.webp" alt="Gojo" class="battle-img" id="gojoImg" />
+            <img src="Images.png/Sukuna.jpg" alt="Sukuna" class="battle-img" id="sukunaImg" />
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-top: 2rem;">
+          <button class="btn-yes" id="btnYesBattle">Yes</button>
+          <button class="btn-no" id="btnNoBattle">No</button>
+        </div>
+        <p class="subtle" id="clickInfo"></p>
+      </div>
+
+      <!-- STEP 6: sad gojo -->
+      <div id="step-dead" class="hidden">
+        <!-- Replace src with your “sad gojo” image path -->
+        <div class="dead-wrapper">
+          <img src="Images.png/Disspointed gojo.png" alt="sad gojo" class="dead-img" />
+          <p class="dead-text">What have you done?</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const stepLetter = document.getElementById("step-letter");
+    const stepQuestion = document.getElementById("step-question");
+    const stepYes = document.getElementById("step-yes");
+    const stepWarning = document.getElementById("step-warning");
+    const stepBattle = document.getElementById("step-battle");
+    const stepDead = document.getElementById("step-dead");
+
+    const openLetter = document.getElementById("openLetter");
+    const btnYes = document.getElementById("btnYes");
+    const btnNo = document.getElementById("btnNo");
+    const btnContinue = document.getElementById("btnContinue");
+    const btnYesBattle = document.getElementById("btnYesBattle");
+    const btnNoBattle = document.getElementById("btnNoBattle");
+
+    const battleImages = document.getElementById("battleImages");
+    const clickInfo = document.getElementById("clickInfo");
+
+    let noClickCount = 0; // counts No clicks in battle phase
+
+    function showStep(step) {
+      [stepLetter, stepQuestion, stepYes, stepWarning, stepBattle, stepDead].forEach(
+        (el) => el.classList.add("hidden")
+      );
+      step.classList.remove("hidden");
+    }
+
+    // Open letter -> show question
+    openLetter.addEventListener("click", () => {
+      showStep(stepQuestion);
+    });
+
+    // YES from main question
+    btnYes.addEventListener("click", () => {
+      showStep(stepYes);
+    });
+
+    // NO from main question -> warning
+    btnNo.addEventListener("click", () => {
+      showStep(stepWarning);
+    });
+
+    // Continue after warning -> battle view
+    btnContinue.addEventListener("click", () => {
+      showStep(stepBattle);
+      noClickCount = 0;
+      battleImages.style.gap = "6rem";
+      clickInfo.textContent = "";
+    });
+
+    // YES in battle -> happy ending
+    function chooseYesInBattle() {
+      showStep(stepYes);
+    }
+
+    btnYesBattle.addEventListener("click", chooseYesInBattle);
+
+    // NO in battle -> move them closer, then sad gojo
+    btnNoBattle.addEventListener("click", () => {
+      noClickCount++;
+
+      if (noClickCount <= 5) {
+        // Gradually reduce gap from 6rem to 0rem over 5 clicks
+        const maxGap = 6; // rem
+        const minGap = 0; // rem
+        const steps = 5;
+        const gap = maxGap - ((maxGap - minGap) / steps) * noClickCount;
+        battleImages.style.gap = gap + "rem";
+
+        clickInfo.textContent = `No clicks: ${noClickCount} / 5 — Sukuna is getting closer…`;
+      }
+
+      if (noClickCount === 5) {
+        clickInfo.textContent = "They’re touching now. One more No and it’s over…";
+      }
+
+      if (noClickCount >= 6) {
+        // Show sad gojo
+        showStep(stepDead);
+      }
+    });
+  
+/* Floating emoji background (infinite) */
+(function startEmojiBackground(){
+  const bg = document.getElementById('emoji-bg');
+  if(!bg) return;
+
+  const emojis = ["🌹","🧸","💜","❤️","💗"];
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(prefersReduced){
+    // If user prefers reduced motion, show a few static emojis
+    for(let i=0;i<40;i++){
+      const e = document.createElement('div');
+      e.className = 'emoji-float';
+      e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      const size = 12 + Math.random()*26;
+      e.style.fontSize = size + 'px';
+      e.style.left = (Math.random()*100) + 'vw';
+      e.style.top = (Math.random()*100) + 'vh';
+      e.style.opacity = 0.35;
+      e.style.animation = 'none';
+      bg.appendChild(e);
+    }
+    return;
+  }
+
+  function spawn(){
+    const e = document.createElement('div');
+    e.className = 'emoji-float';
+    e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+
+    const left = Math.random()*100; // vw
+    const drift = (Math.random()*120 - 60); // px
+    const size = 14 + Math.random()*34; // px
+    const duration = 6 + Math.random()*7; // s
+    const delay = Math.random()*1.5; // s
+    const rotate = (Math.random()*720 - 360) + 'deg';
+
+    e.style.left = left + 'vw';
+    e.style.fontSize = size + 'px';
+    e.style.setProperty('--x', drift + 'px');
+    e.style.setProperty('--r', rotate);
+    e.style.animationDuration = duration + 's';
+    e.style.animationDelay = delay + 's';
+
+    bg.appendChild(e);
+
+    // Cleanup when animation ends
+    e.addEventListener('animationend', () => e.remove());
+  }
+
+  // Density control
+  const rateMs = 180; // ~5-6 emojis/sec
+  setInterval(spawn, rateMs);
+  // Burst at start so it doesn't look empty
+  for(let i=0;i<25;i++) spawn();
+})();
+
+
+/* YAY page: spam "I LOVE YOU SM AVIIIII 💜" for 10s, bigger each time, then show device error */
+let yaySpamRunning = false;
+function runYaySpam(){
+  if(yaySpamRunning) return;
+  const yesStep = document.getElementById('step-yes');
+  if(!yesStep) return;
+
+  yaySpamRunning = true;
+
+  const text = "I LOVE YOU SM AVIIIII 💜";
+  const start = Date.now();
+  const durationMs = 10000;
+  let fontSize = 18; // start size
+  const maxSize = 160;
+  const spawnEveryMs = 180;
+
+  const spawn = () => {
+    const el = document.createElement('div');
+    el.className = 'yay-spam';
+    el.textContent = text;
+
+    // random position
+    const x = Math.random() * 90; // vw
+    const y = Math.random() * 90; // vh
+    el.style.left = x + 'vw';
+    el.style.top = y + 'vh';
+
+    // grow size each spawn
+    fontSize = Math.min(maxSize, fontSize + 4 + Math.random()*4);
+    el.style.fontSize = fontSize + 'px';
+
+    document.body.appendChild(el);
+    // cleanup after pop anim
+    
+  };
+
+  const timer = setInterval(() => {
+    // only run while YES step is visible
+    const visible = yesStep.style.display !== 'none' && yesStep.offsetParent !== null;
+    if(!visible) return;
+
+    if(Date.now() - start >= durationMs){
+      clearInterval(timer);
+      showDeviceError();
+      return;
+    }
+    spawn();
+  }, spawnEveryMs);
+
+  // initial burst
+  for(let i=0;i<8;i++) spawn();
+}
+
+function showDeviceError(){
+  const modal = document.getElementById('device-error');
+  if(!modal) return;
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
+}
+
+(function wireDeviceErrorClose(){
+  const btn = document.getElementById('closeDeviceError');
+  const modal = document.getElementById('device-error');
+  if(btn && modal){
+    btn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+    });
+    // click outside to close
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal){
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden','true');
+      }
+    });
+  }
+})();
+
+
+/* Auto-trigger yay spam when step-yes becomes visible */
+(function watchYesStep(){
+  const yesStep = document.getElementById('step-yes');
+  if(!yesStep) return;
+
+  const check = () => {
+    const visible = yesStep.style.display !== 'none' && yesStep.offsetParent !== null;
+    if(visible) runYaySpam();
+  };
+
+  // Run now and whenever styles/classes change
+  check();
+  const obs = new MutationObserver(check);
+  obs.observe(yesStep, { attributes: true, attributeFilter: ['style','class'] });
+})();
+
+</script>
+
+  <!-- Device Error Popup -->
+  <div id="device-error" aria-hidden="true">
+    <div class="box">
+      <p class="title">WARNING / ERROR</p>
+      <p class="msg">YOUR DEVICE CAN'T HANDLE TS!!!!</p>
+      <div class="btn" id="closeDeviceError">OK</div>
+    </div>
+  </div>
+
+</body>
+</html>
